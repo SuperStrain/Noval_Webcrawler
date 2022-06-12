@@ -12,9 +12,9 @@ import re
 
 def main():
     baseurl='https://www.qidian.com/finish/chanId21/'
-    getData(baseurl)
+    askURL(baseurl)
 
-
+findbkname=re.compile(r'<a data-bid=".*?" data-eid="qd_B58" href=".*?" target="_blank" title="(.*?)最新章节在线阅读">')
 
 #爬取一个网页的数据
 def askURL(url):
@@ -23,7 +23,7 @@ def askURL(url):
     html=''
     response=urllib.request.urlopen(request)
     html=response.read().decode('utf-8')
-    # print(html)
+    print(html)
     return html
 
 #爬取网页+解析数据
@@ -35,8 +35,9 @@ def getData(url):
         #逐一解析数据
         soup=BeautifulSoup(html,'html.parser')
         for item in soup.find_all('div',class_="book-mid-info"):
-            print(item)
-            print('\n')
+            bookname = re.findall(findbkname, item)
+            print(bookname)
+            # print(type(bookname))
 
 
 
