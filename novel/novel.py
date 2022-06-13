@@ -5,15 +5,22 @@
 # @Software: PyCharm
 
 #查找的数据有：小说名、作者、小说链接、类别、状态、简介
-#步骤：
+#步骤：1、爬取网页  2、解析数据  3、保存数据（Excel或数据库）
 
 from bs4 import BeautifulSoup
 import urllib.error,urllib.request
 import re
+import xlwt
+import sqlite3
 
 def main():
     baseurl='https://www.qidian.com/finish/chanId21/'
-    getData(baseurl)
+    datalist=getData(baseurl)   #1、爬取网页  2、解析数据
+    path='novel.xls'
+    #保存数据
+    # saveData_excel(datalist,path)
+    saveData_data(datalist,path)
+
 
 
 #定义查找小信息的关键字
@@ -78,8 +85,55 @@ def getData(url):
 
             datalist.append(data)
 
-    print(datalist)
+    # print(datalist)   #用于展示
     return datalist
+
+#保存到Excel
+def saveData_excel(datalist,path):
+    workbook=xlwt.Workbook(encoding='utf-8',style_compression=0)
+    worksheet=workbook.add_sheet('sheet1',cell_overwrite_ok=True)
+    col=('小说名','作者','小说链接','类别','状态','简介')
+    for i in range(6):
+        worksheet.write(0,i,col[i])
+    for i in range(100):
+        print("正在打印第%d本小说信息"%(i+1))
+        data=datalist[i]
+        for j in range(6):
+            worksheet.write(i+1,j,data[j])
+    workbook.save(path)
+
+#数据库初始化
+def init_db(dbpath):
+    sql='''
+    create table novel
+    (
+    id integer primary key authorization ,
+    novelname varchar ,
+    writer varchar ,
+    link text,
+    category varchar ,
+    book_state varchar ,
+    instroduction text
+    )
+    '''
+    conn=sqlite3.connect(dbpath)#连接数据库
+    c=conn.cursor()             #获取游标
+    c.execute(sql)              #执行sql语句
+    conn.commit()               #提交数据库
+    conn.close()                #关闭数据库
+    print('建表成功！')
+
+#保存到数据库
+def saveData_data(datalist,path):
+    init_db(path)
+    conn=sqlite3.connect(path)
+    cur=conn.cursor()
+
+    for data in datalist:
+        for index in range(len(data)):#len(data)表示data的数量
+            #数据库插入字符串要加引号，做法如下：
+
+
 
 
 
