@@ -18,8 +18,8 @@ def main():
     datalist=getData(baseurl)   #1、爬取网页  2、解析数据
     path='novel.xls'
     #保存数据
-    # saveData_excel(datalist,path)
-    saveData_data(datalist,path)
+    saveData_excel(datalist,path)
+    # saveData_data(datalist,path)
 
 
 
@@ -107,7 +107,7 @@ def init_db(dbpath):
     sql='''
     create table novel
     (
-    id integer primary key authorization ,
+    id integer primary key autoincrement ,
     novelname varchar ,
     writer varchar ,
     link text,
@@ -125,13 +125,25 @@ def init_db(dbpath):
 
 #保存到数据库
 def saveData_data(datalist,path):
-    init_db(path)
+    # init_db(path)
     conn=sqlite3.connect(path)
     cur=conn.cursor()
 
     for data in datalist:
-        for index in range(len(data)):#len(data)表示data的数量
-            #数据库插入字符串要加引号，做法如下：
+        for index in range(len(data)):#len(data)表示data内元素的数量，这里是6
+            #数据库插入字符串要用引号包裹，做法如下：
+            data[index]='"'+str(data[index])+'"'
+        sql='''
+        insert into novel(
+        novelname,writer,link,category,book_state,instroduction 
+        )
+        values(%s,%s,%s,%s,%s,%s)
+        '''%(data[0],data[1],data[2],data[3],data[4],data[5])
+        print(sql)    #测试sql语句是否正确
+        cur.execute(sql)
+        conn.commit()
+    cur.close()
+    conn.close()
 
 
 
