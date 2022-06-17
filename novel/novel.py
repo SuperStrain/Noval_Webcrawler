@@ -45,7 +45,7 @@ def askURL(url):
 
 #爬取网页+解析数据
 def getData(url):
-    datalist=[]
+    datalist=[] #列表
     for i in range(1,6):
         rurl=url+str(r'-page'+str(i)+'/')
         html=askURL(rurl)
