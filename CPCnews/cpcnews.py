@@ -34,7 +34,7 @@ def askURL(url):
     # print(html)
     return html
 
-#获取多个网页数据，并进行解
+#获取多个网页数据，并进行解析
 def getData(baseurl):
     datalist=[]
     for i in range(0,7):
