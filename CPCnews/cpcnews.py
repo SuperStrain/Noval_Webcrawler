@@ -22,7 +22,7 @@ def main():
 
 #定义查找小信息的关键字
 findevent=re.compile(r'<a href=".*?/n1/2022/\d*/c.*?.html" target="_blank">(.*?)</a>')
-findtime=re.compile(r'<i>(.*?)</i>')
+findtime=re.compile(r'<i>\[(.*?)\]</i>')
 
 #获取一个网页的数据
 def askURL(url):
@@ -57,8 +57,8 @@ def getData(baseurl):
 
 
             time = re.findall(findtime,item)[0]
-            time = time.replace('[','')
-            time = time.replace(']', '')
+            # time = time.replace('[','')
+            # time = time.replace(']', '')
             # print(time)
             data.append(time)
             datalist.append(data)
