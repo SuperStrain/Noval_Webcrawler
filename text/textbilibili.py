@@ -8,7 +8,4 @@
 # for i in range(0, 7):
 #     baseurl = baseurl + str(r'/index' + str(i + 1) + '.html')
 #     print(baseurl)
-url='https://www.qidian.com/finish/chanId21/'
-for i in range(1, 6):
-    rurl = url + str(r'-page' + str(i) + '/')
-    print(rurl)
+
