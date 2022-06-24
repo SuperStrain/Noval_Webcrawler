@@ -37,7 +37,7 @@
         </library>
       </libraries>
     </data-source>
-    <data-source source="LOCAL" name="remark" uuid="5565abf2-b2f8-4949-b220-db921544dd00">
+    <data-source source="LOCAL" name="remark" uuid="2dbf047b-73d3-4cf3-8f47-d1ea7763918c">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>

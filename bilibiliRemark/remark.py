@@ -17,8 +17,10 @@ import sqlite3
 def main():
     baseurl='https://api.bilibili.com/x/v2/reply/'
     datalist=getData(baseurl)
+    Statistics_Sex(datalist)
     dbpath='remark.db'
     SaveToDB(datalist,dbpath)
+
 
 
 
@@ -34,24 +36,25 @@ def askURL(url):
 # 解析json格式的数据
 def getData(baseurl):
     datalist=[]
-    for i in range(0,10):
+    for i in range(0,30):
         url=baseurl+'main?csrf=4cb2f8e3ab70964bf94bd639ba239832&mode=3&next='+str(i+1)+'&oid=927086822&plat=1&type=1'
         html=askURL(url)
-        data=re.findall(r"\"replies\":(.+?),\"top\"",html)
+        data=re.findall(r"\"replies\":(.+?),\"top\"",html)#正则表达式获取关键信息
         # print(data)
-        jsonobj=json.loads(data[0])
+        jsonobj=json.loads(data[0])#将str格式化为字典格式
         for item in jsonobj:
             data=[]
-            #取出在字典里的字典（嵌套字典）----才可以调用键名，这是困扰我一个晚上的问题！
-            member=item['member']
-            content=item['content']
-            reply_control=item['reply_control']
 
-            data.append(member['uname'])#添加用户id
-            data.append(member['sex'])#添加性别
-            data.append(member['sign'])#添加个性签名
-            data.append(content['message'])#评论
-            data.append(reply_control['time_desc'])#评论时间
+            # member=item['member']
+            # content=item['content']
+            # reply_control=item['reply_control']
+
+            # 取出在字典里的字典（嵌套字典）----才可以调用键名，这是困扰我一个晚上的问题！
+            data.append(item['member']['uname'])#添加用户id
+            data.append(item['member']['sex'])#添加性别
+            data.append(item['member']['sign'])#添加个性签名
+            data.append(item['content']['message'])#评论
+            data.append(item['reply_control']['time_desc'])#评论时间
             datalist.append(data)
     # print(datalist)
     return datalist
@@ -99,6 +102,22 @@ def SaveToDB(datalist,path):
     coon.close()
     print('bilibili评论信息已经全部保存至数据库！')
 
+def Statistics_Sex(datalist):
+    man=0
+    woman=0
+    unknown=0
+    total=len(datalist)
+    for data in datalist:
+        if(data[1]=='男'):
+            man=man+1
+        elif(data[1]=='女'):
+            woman=woman+1
+        else:
+            unknown=unknown+1
+    man_=float(man)/float(total)
+    woman_=float(woman)/float(total)
+    unknown_=float(unknown)/float(total)
+    print('评论人员性别分析：男性占比%.2f，女性占比%.2f，保密占%.2f,总共有%d人。'%(man_,woman_,unknown_,total))
 
 if __name__=='__main__':
     main()
