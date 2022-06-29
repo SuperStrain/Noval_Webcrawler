@@ -1,0 +1,5 @@
+2022-06-29 22:20:23 connectionpool.py [line:227] DEBUG: Starting new HTTP connection (1): 59.38.60.118:9797
+2022-06-29 22:21:23 connectionpool.py [line:227] DEBUG: Starting new HTTP connection (1): 183.93.207.72:7082
+2022-06-29 22:27:00 connectionpool.py [line:227] DEBUG: Starting new HTTP connection (1): 219.146.125.162:9091
+2022-06-29 22:27:02 connectionpool.py [line:452] DEBUG: http://219.146.125.162:9091 "GET http://httpbin.org/get HTTP/1.1" 200 410
+2022-06-29 22:27:02 connectionpool.py [line:971] DEBUG: Starting new HTTPS connection (1): httpbin.org:443

@@ -9,6 +9,7 @@ from IPProxyPool.utils.http import get_request_headers
 from IPProxyPool.settings import TEXT_TIMEOUT
 import json
 from IPProxyPool.utils.log import logger
+from IPProxyPool.domain import Proxy
 
 """
 实现代理池的校验模块：检查代理ip的 速度 和 匿名 程度；
@@ -20,8 +21,36 @@ def check_proxy(proxy):
     """
     用于检查指定 代理ip 响应速度 匿名程度 支持协议类型
     :param proxy:
-    :return:
+    :return:检查后的代理ip模型对象
     """
+    #准备代理ip字典
+    proxies={
+        'http':'http://{}:{}'.format(proxy.ip,proxy.port),
+        'https':'https://{}:{}'.format(proxy.ip,proxy.port)
+    }
+    #测试代理ip
+    http,http_nick_type,http_speed=check_http_proxies(proxies)
+    https, https_nick_type, https_speed = check_http_proxies(proxies,False)
+    # 代理支持的协议类型，http是0，https是1，都支持是2
+    if https and http:
+        proxy.protocol=2
+        proxy.nick_type=https_nick_type
+        proxy.speed=https_speed
+    elif http:
+        proxy.protocol=0
+        proxy.nick_type=http_nick_type
+        proxy.speed=http_speed
+    elif https:
+        proxy.protocol=1
+        proxy.nick_type=https_nick_type
+        proxy.speed=https_speed
+    else:
+        proxy.protocol=-1
+        proxy.nick_type=-1
+        proxy.speed=-1
+
+    return proxy
+
 
 
 def check_http_proxies(prosies,is_http=True):
@@ -59,3 +88,6 @@ def check_http_proxies(prosies,is_http=True):
         logger.exception(ex)
         return False,nick_type,speed
 
+if __name__ == '__main__':
+    proxy=Proxy('219.146.125.162',port='9091')
+    print(check_proxy(proxy))

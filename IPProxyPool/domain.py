@@ -4,7 +4,7 @@
 # @File : f.py
 # @Software: PyCharm
 
-from settings import MAX_SCORE
+from IPProxyPool.settings import MAX_SCORE
 
 #定义代理IP的数据类型
 
