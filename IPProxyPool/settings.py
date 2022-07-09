@@ -16,4 +16,4 @@ LOG_DATEFMT='%Y-%m-%d %H:%M:%S'#默认时间格式
 LOG_FILENAME='log.log'#默认日志文件名称
 
 #测试代理ip的超时时间
-TEXT_TIMEOUT=10
+TEXT_TIMEOUT=50

@@ -89,5 +89,5 @@ def check_http_proxies(prosies,is_http=True):
         return False,nick_type,speed
 
 if __name__ == '__main__':
-    proxy=Proxy('219.146.125.162',port='9091')
+    proxy=Proxy('61.160.137.53',port='9098')
     print(check_proxy(proxy))

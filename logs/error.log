@@ -1,0 +1,4 @@
+2022-07-09 22:26:55.976 | ERROR    | proxypool.crawlers.base:crawl:47 - crawler <public.daili66.Daili66Crawler object at 0x000001E60DD6BF10> crawled proxy unsuccessfully, please check if target url is valid or network issue
+2022-07-09 22:27:07.113 | ERROR    | proxypool.crawlers.base:crawl:47 - crawler <public.daili66.Daili66Crawler object at 0x0000017A2435C070> crawled proxy unsuccessfully, please check if target url is valid or network issue
+2022-07-09 22:27:53.061 | ERROR    | proxypool.crawlers.base:crawl:47 - crawler <public.xiladaili.XiladailiCrawler object at 0x0000017A255A3490> crawled proxy unsuccessfully, please check if target url is valid or network issue
+2022-07-09 22:28:09.014 | ERROR    | proxypool.crawlers.base:crawl:47 - crawler <public.xiladaili.XiladailiCrawler object at 0x000001E60EF753D0> crawled proxy unsuccessfully, please check if target url is valid or network issue
